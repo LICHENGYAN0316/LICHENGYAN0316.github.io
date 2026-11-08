@@ -1,0 +1,12 @@
+---
+import { profileConfig } from "../../config";
+import { url } from "../../utils/url-utils";
+---
+<div class="pluto-profile card-base" data-pagefind-ignore>
+  <a href={url('/')} aria-label="Pluto 首页" class="avatar-link"><img src={url(profileConfig.avatar || '/pluto/avatar.svg')} alt="Pluto 星球标记" width="112" height="112" /></a>
+  <div class="eyebrow">A PERSONAL JOURNAL</div>
+  <div class="profile-name">Pluto<span>✦</span></div>
+  <p>{profileConfig.bio}</p>
+  <div class="profile-rule"></div>
+  <span class="profile-note">一处安静的文字角落</span>
+</div>

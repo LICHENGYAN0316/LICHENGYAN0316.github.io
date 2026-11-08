@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import cliffs from "../../assets/pluto/cosmic-cliffs.jpg";
+import StarField from "./StarField.astro";
+import { url } from "../../utils/url-utils";
+interface Props { latestPostUrl: string; }
+const { latestPostUrl } = Astro.props;
+---
+<cosmic-hero>
+  <figure class="cosmic-feature">
+    <section class="pluto-hero card-base" aria-labelledby="welcome-title" data-stars-paused="false">
+      <Image src={cliffs} alt="韦布望远镜拍摄的宇宙悬崖：金色星云在蓝色星空下延展。" class="cosmic-image" widths={[640, 960, 1440, 1920]} sizes="(max-width: 1023px) 100vw, 904px" format="webp" quality={86} loading="eager" fetchpriority="high" />
+      <div class="cosmic-shade" aria-hidden="true"></div>
+      <StarField isHero />
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="tiny-star" aria-hidden="true">✦</span> PLUTO'S PERSONAL JOURNAL</div>
+        <h1 id="welcome-title">把思考，<br />留在这里<span class="title-dot">。</span></h1>
+        <p>你好，我是 Pluto。<br />这里是我的随笔，想到什么，就写什么。</p>
+        <div class="hero-actions"><a class="primary-action" href={latestPostUrl}>读一篇随笔 <span aria-hidden="true">↗</span></a><a class="quiet-action" href={url('/essays/')}>查看全部 <span aria-hidden="true">→</span></a></div>
+      </div>
+      <div class="hero-foot"><span>NOTES. THOUGHTS. OBSERVATIONS.</span><span>慢慢观察，慢慢写 <span aria-hidden="true">✦</span></span></div>
+      <button type="button" class="star-toggle" aria-label="暂停星光动画" hidden><span class="star-toggle-icon" aria-hidden="true">Ⅱ</span><span class="star-toggle-label" aria-live="polite" aria-atomic="true">播放中 · 暂停</span></button>
+    </section>
+    <figcaption class="cosmic-credit"><span>宇宙悬崖 <span class="credit-divider">·</span> COSMIC CLIFFS</span><span>Image: <a href="https://esawebb.org/images/weic2205a/" target="_blank" rel="noopener noreferrer">NASA, ESA, CSA, and STScI</a> <span class="credit-divider">·</span> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></span></figcaption>
+  </figure>
+</cosmic-hero>
+
+<script>
+  class CosmicHero extends HTMLElement {
+    private cleanup?: () => void;
+    connectedCallback() {
+      this.cleanup?.();
+      const scene = this.querySelector<HTMLElement>(".pluto-hero");
+      const button = this.querySelector<HTMLButtonElement>(".star-toggle");
+      const label = this.querySelector<HTMLElement>(".star-toggle-label");
+      const icon = this.querySelector<HTMLElement>(".star-toggle-icon");
+      if (!scene || !button || !label || !icon) return;
+      const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let userPaused = false;
+      let inView = true;
+      try { userPaused = localStorage.getItem("pluto-stars-paused") === "true"; } catch { /* Preferences can be unavailable in private browsers. */ }
+      const update = () => {
+        const automaticallyPaused = !inView || document.hidden;
+        const paused = userPaused || motion.matches || automaticallyPaused;
+        scene.dataset.starsPaused = String(paused);
+        button.dataset.state = motion.matches ? "static" : paused ? "paused" : "playing";
+        button.disabled = motion.matches;
+        button.setAttribute("aria-label", motion.matches ? "已按系统设置关闭星光动画" : paused ? "播放星光动画" : "暂停星光动画");
+        label.textContent = motion.matches ? "静态星空" : userPaused ? "已暂停 · 播放" : automaticallyPaused ? "已自动暂停" : "播放中 · 暂停";
+        icon.textContent = paused ? "▷" : "Ⅱ";
+        button.hidden = false;
+      };
+      const toggle = () => {
+        userPaused = scene.dataset.starsPaused !== "true";
+        try { localStorage.setItem("pluto-stars-paused", String(userPaused)); } catch { /* Keep the current page control usable. */ }
+        update();
+      };
+      const observer = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; update(); }, { threshold: 0.05 });
+      observer.observe(scene);
+      button.addEventListener("click", toggle);
+      document.addEventListener("visibilitychange", update);
+      motion.addEventListener("change", update);
+      update();
+      this.cleanup = () => {
+        observer.disconnect();
+        button.removeEventListener("click", toggle);
+        document.removeEventListener("visibilitychange", update);
+        motion.removeEventListener("change", update);
+      };
+    }
+    disconnectedCallback() { this.cleanup?.(); }
+  }
+  if (!customElements.get("cosmic-hero")) customElements.define("cosmic-hero", CosmicHero);
+</script>

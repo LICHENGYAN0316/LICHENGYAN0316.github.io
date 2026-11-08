@@ -1,0 +1,116 @@
+---
+interface Props {
+  /** Keep stars light when the containing hero stays dark in both themes. */
+  isHero?: boolean;
+}
+
+const { isHero = false } = Astro.props;
+
+// Fixed coordinates keep server output identical across builds and navigation.
+const positions = [
+  [5, 16], [12, 67], [18, 32], [22, 88], [27, 9], [31, 55],
+  [36, 76], [41, 23], [46, 92], [50, 44], [55, 12], [59, 69],
+  [63, 34], [67, 86], [71, 17], [74, 57], [78, 39], [81, 75],
+  [85, 8], [88, 49], [91, 91], [94, 27], [97, 64], [8, 91],
+  [57, 26], [69, 46], [83, 22], [93, 43],
+  [48, 63], [61, 81], [79, 67], [90, 74],
+];
+
+const stars = positions.map(([x, y], index) => ({
+  x,
+  y,
+  accent: index % 4 === 0,
+  size: index % 4 === 0 ? 3.8 : 2 + (index % 3) * 0.5,
+  opacity: index % 4 === 0 ? 0.95 : 0.6 + (index % 4) * 0.1,
+  twinkle: 5 + (index % 5) * 0.75,
+  drift: 18 + (index % 7) * 2,
+  delay: -(index * 2.7),
+  dx: (index % 2 === 0 ? 1 : -1) * (55 + (index % 4) * 10),
+  dy: -(50 + (index % 5) * 10),
+}));
+---
+
+<div class:list={["pluto-star-field", { "is-hero": isHero }]} aria-hidden="true">
+  {stars.map((star) => (
+    <span
+      class:list={["pluto-star", { "is-accent": star.accent }]}
+      style={`--star-x:${star.x}%;--star-y:${star.y}%;--star-size:${star.size}px;--star-opacity:${star.opacity};--star-twinkle:${star.twinkle}s;--star-drift:${star.drift}s;--star-delay:${star.delay}s;--star-dx:${star.dx}px;--star-dy:${star.dy}px;`}
+    />
+  ))}
+</div>
+
+<style>
+  .pluto-star-field {
+    --star-color: #65758b;
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+    user-select: none;
+    color: var(--star-color);
+  }
+
+  :global(:root.dark) .pluto-star-field,
+  .pluto-star-field.is-hero {
+    --star-color: #f1f7ff;
+  }
+
+  .pluto-star {
+    position: absolute;
+    left: var(--star-x);
+    top: var(--star-y);
+    width: var(--star-size);
+    height: var(--star-size);
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 6px 1px #d7e9ffbb, 0 0 14px #a5cfff88;
+    opacity: var(--star-opacity);
+    animation:
+      pluto-star-twinkle var(--star-twinkle) ease-in-out var(--star-delay) infinite,
+      pluto-star-drift var(--star-drift) linear var(--star-delay) infinite alternate;
+  }
+
+  .pluto-star.is-accent {
+    box-shadow: 0 0 8px 2px #d7e9ff, 0 0 24px 3px #a5cfff99;
+  }
+
+  .pluto-star.is-accent::before,
+  .pluto-star.is-accent::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 1px;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.9;
+  }
+
+  .pluto-star.is-accent::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  :global([data-stars-paused="true"]) .pluto-star {
+    animation-play-state: paused;
+  }
+
+  @keyframes pluto-star-twinkle {
+    0%, 100% { opacity: var(--star-opacity); }
+    50% { opacity: calc(var(--star-opacity) * 0.2); }
+  }
+
+  @keyframes pluto-star-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(var(--star-dx), var(--star-dy), 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pluto-star {
+      animation: none;
+      transform: none;
+    }
+  }
+</style>

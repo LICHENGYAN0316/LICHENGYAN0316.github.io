@@ -1,0 +1,12 @@
+---
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+import ArticleCard from "../components/pluto/ArticleCard.astro";
+import CosmicHero from "../components/pluto/CosmicHero.astro";
+import { getSortedPosts } from "../utils/content-utils";
+import { url, getPostUrlBySlug } from "../utils/url-utils";
+const posts = await getSortedPosts();
+---
+<MainGridLayout description="Pluto 的个人随笔。记录观察，整理想法，给思考留一点空间。">
+  <CosmicHero latestPostUrl={posts[0] ? getPostUrlBySlug(posts[0].slug) : url("/essays/")} />
+  <section class="pluto-section" aria-labelledby="recent-title"><div class="section-heading"><div><div class="eyebrow">RECENT ENTRIES</div><h2 id="recent-title">最近的随笔 <span>{String(posts.length).padStart(2, '0')}</span></h2></div><a href={url('/essays/')}>全部随笔 <span aria-hidden="true">↗</span></a></div><div class="article-list">{posts.slice(0, 4).map((entry, index) => <ArticleCard entry={entry} index={index} />)}</div></section>
+</MainGridLayout>

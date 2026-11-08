@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Pluto</title>
+  <desc id="desc">原创冥王星风格标记，浅色心形地貌。</desc>
+  <defs>
+    <radialGradient id="halo"><stop offset=".65" stop-color="#D6AE7D" stop-opacity=".15"/><stop offset="1" stop-color="#D6AE7D" stop-opacity="0"/></radialGradient>
+    <radialGradient id="planet" cx=".28" cy=".24" r=".84"><stop stop-color="#D9C9B0"/><stop offset=".5" stop-color="#B39B7E"/><stop offset="1" stop-color="#554B40"/></radialGradient>
+    <linearGradient id="heart" x1="30" y1="27" x2="45" y2="45" gradientUnits="userSpaceOnUse"><stop stop-color="#F4E9D0"/><stop offset="1" stop-color="#D1BC97"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#111923"/>
+  <circle cx="32" cy="32" r="31" fill="url(#halo)"/>
+  <circle cx="32" cy="32" r="24" fill="url(#planet)"/>
+  <path d="M10 29C16 26 21 29 25 33L22 38C18 37 15 39 12 38Z" fill="#735443" opacity=".45"/>
+  <path d="M33 30C30 25 25 24 23 27C20 31 23 35 27 39L36 48L44 39C48 34 49 28 45 26C41 24 38 27 36 31Z" fill="url(#heart)"/>
+  <path d="M15 17C21 11 28 9 35 9" stroke="#EDE0C7" stroke-opacity=".42" stroke-width="1" stroke-linecap="round"/>
+</svg>

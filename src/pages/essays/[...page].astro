@@ -1,0 +1,11 @@
+---
+import type { GetStaticPaths } from "astro";
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import ArticleCard from "../../components/pluto/ArticleCard.astro";
+import Pagination from "../../components/control/Pagination.astro";
+import { getSortedPosts } from "../../utils/content-utils";
+import { url } from "../../utils/url-utils";
+export const getStaticPaths = (async ({ paginate }) => paginate(await getSortedPosts(), { pageSize: 8 })) satisfies GetStaticPaths;
+const { page } = Astro.props;
+---
+<MainGridLayout title="随笔" description="Pluto 的随笔。想到什么，就写什么。"><header class="page-heading"><div class="eyebrow">THE JOURNAL</div><h1>随笔<span class="title-dot">.</span></h1><p>想到什么，就写什么。</p><a class="subtle-link" href={url('/archive/')}>按时间浏览 →</a></header><div class="article-list">{page.data.map((entry, index) => <ArticleCard entry={entry} index={page.start + index} />)}</div><Pagination page={page} /></MainGridLayout>

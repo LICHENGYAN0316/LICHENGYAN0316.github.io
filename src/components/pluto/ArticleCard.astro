@@ -1,0 +1,11 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getPostUrlBySlug } from "../../utils/url-utils";
+interface Props { entry: CollectionEntry<"posts">; index?: number; }
+const { entry, index = 0 } = Astro.props;
+const date = entry.data.published.toISOString().slice(0, 10).replaceAll("-", ".");
+---
+<a class="pluto-article card-base" href={getPostUrlBySlug(entry.slug)}>
+  <div class="article-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
+  <div class="article-copy"><div class="pluto-meta"><time datetime={entry.data.published.toISOString()}>{date}</time></div><h3>{entry.data.title}</h3><p>{entry.data.description}</p><div class="article-bottom"><span class="read-link">阅读全文 <span aria-hidden="true">↗</span></span></div></div>
+</a>

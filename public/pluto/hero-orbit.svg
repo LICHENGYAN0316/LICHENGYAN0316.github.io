@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700" fill="none" role="img" aria-labelledby="title">
+  <title id="title">深空中的 Pluto 星球与细线轨道</title>
+  <defs>
+    <radialGradient id="halo"><stop stop-color="#C69972" stop-opacity=".16"/><stop offset="1" stop-color="#C69972" stop-opacity="0"/></radialGradient>
+    <radialGradient id="surface" cx="0" cy="0" r="1" gradientTransform="translate(496 271) rotate(44) scale(257)"><stop stop-color="#F1E6D5"/><stop offset=".35" stop-color="#D8C8AF"/><stop offset=".68" stop-color="#9C9686"/><stop offset=".88" stop-color="#525D60"/><stop offset="1" stop-color="#202E39"/></radialGradient>
+    <linearGradient id="track" x1="251" y1="541" x2="782" y2="158"><stop stop-color="#D59A68" stop-opacity="0"/><stop offset=".3" stop-color="#D59A68" stop-opacity=".3"/><stop offset=".7" stop-color="#E4B78F" stop-opacity=".8"/><stop offset="1" stop-color="#D59A68" stop-opacity=".1"/></linearGradient>
+    <clipPath id="planet-clip"><circle cx="558" cy="346" r="142"/></clipPath>
+  </defs>
+  <circle cx="552" cy="346" r="295" fill="url(#halo)"/>
+  <g stroke="#A6BAC8" stroke-opacity=".1"><circle cx="558" cy="346" r="216"/><circle cx="558" cy="346" r="284"/><path d="M558 40V90M558 602V650M251 346H300M814 346H765"/></g>
+  <ellipse cx="553" cy="359" rx="296" ry="96" transform="rotate(-31 553 359)" stroke="url(#track)" stroke-width="1.2"/>
+  <ellipse cx="553" cy="359" rx="336" ry="112" transform="rotate(-31 553 359)" stroke="#D59A68" stroke-opacity=".13" stroke-width=".8"/>
+  <circle cx="558" cy="346" r="142" fill="url(#surface)"/>
+  <g clip-path="url(#planet-clip)" stroke-linecap="round">
+    <path d="M425 282C469 253 516 269 545 296C574 323 609 314 655 299C679 291 701 303 719 313" stroke="#F1E3CE" stroke-opacity=".15" stroke-width="17"/>
+    <path d="M407 328C457 299 472 346 516 349C560 353 563 334 609 350C650 364 661 352 701 337" stroke="#807E73" stroke-opacity=".16" stroke-width="23"/>
+    <path d="M410 367C450 350 480 385 517 399C562 415 582 382 624 392C650 398 680 421 701 415" stroke="#FAEEDB" stroke-opacity=".12" stroke-width="12"/>
+    <path d="M459 445C483 427 522 441 549 449C573 456 613 447 632 455" stroke="#E6DAC3" stroke-opacity=".12" stroke-width="16"/>
+  </g>
+  <path d="M300 494C329 535 474 490 605 411C731 336 810 254 804 223" stroke="url(#track)" stroke-width="1.8"/>
+  <circle cx="716" cy="334" r="4.5" fill="#DEAD83"/>
+  <circle cx="716" cy="334" r="11" stroke="#DEAD83" stroke-opacity=".17"/>
+  <g fill="#E3E8E9"><circle cx="386" cy="129" r="1.5" opacity=".5"/><circle cx="749" cy="141" r="1" opacity=".6"/><circle cx="310" cy="296" r="1" opacity=".3"/><circle cx="392" cy="582" r="1.5" opacity=".4"/><circle cx="738" cy="553" r="1.5" opacity=".5"/><circle cx="626" cy="86" r="1" opacity=".4"/><circle cx="201" cy="462" r="1" opacity=".25"/></g>
+  <path d="M677 590H687M682 585V595M313 185H321M317 181V189" stroke="#D59A68" stroke-opacity=".5"/>
+</svg>

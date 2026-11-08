@@ -1,0 +1,13 @@
+---
+import type { MarkdownHeading } from "astro";
+import Profile from "./Profile.astro";
+import { getSortedPosts } from "../../utils/content-utils";
+interface Props { class?: string; headings?: MarkdownHeading[]; }
+const posts = await getSortedPosts();
+---
+<aside id="sidebar" class:list={[Astro.props.class, 'w-full']} aria-label="个人信息" data-pagefind-ignore>
+  <Profile />
+  <div id="sidebar-sticky" class="sticky top-4 mt-4">
+    <div class="sidebar-bottom"><span>{posts.length} 篇随笔</span></div>
+  </div>
+</aside>
