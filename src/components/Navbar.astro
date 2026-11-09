@@ -88,7 +88,12 @@ loadButtonScript();
 function updateNavigation() {
   const current = window.location.pathname;
   document.querySelectorAll<HTMLAnchorElement>('[data-pluto-nav]').forEach(link => {
-    const active = link.dataset.plutoNav === '/' ? current === '/' : current !== '/';
+    const destination = link.dataset.plutoNav;
+    const active = destination === '/'
+      ? current === '/'
+      : destination === '/essays/'
+        ? ['/essays/', '/posts/', '/archive/'].some(path => current.startsWith(path))
+        : Boolean(destination && current.startsWith(destination));
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
   document.getElementById('nav-menu-panel')?.classList.add('float-panel-closed');

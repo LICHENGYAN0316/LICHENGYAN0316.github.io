@@ -2,6 +2,8 @@
 
 A personal journal by Pluto, built with Astro and Fuwari.
 
+The site includes 随笔 (essays) and 造物 (creations). The creations section is currently empty.
+
 Website: https://lichengyan0316.github.io/
 
 ## Development
